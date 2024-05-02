@@ -1,0 +1,164 @@
+@import "../../mixins.scss";
+
+.header {
+  position: fixed;
+  transform: translateY(0);
+  //position: relative;
+  z-index: 100;
+  background-color: black;
+  width: 100%;
+  opacity: 0.8;
+  color: white;
+  height: 60px;
+  z-index: 20;
+  transition: all ease 0.5s;
+
+  &.top {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+  }
+  &.show {
+    background-color: var(--black3);
+  }
+  &.hide {
+    transform: translateY(-60px);
+  }
+
+  .containner {
+    position: relative;
+    z-index: 100;
+    width: 90%;
+    margin: 0 10px 0 20px;
+    //padding-top: 20px;
+    //background-color: pink;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    img {
+      height: 50px;
+      cursor: pointer;
+    }
+  }
+  .menuitems {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    display: none;
+    font-weight: 500;
+    @include md {
+      display: flex;
+    }
+  }
+  .menuitem {
+    cursor: pointer;
+
+    &:hover {
+      color: pink;
+    }
+  }
+
+  .mobilemenuitems {
+    cursor: pointer;
+    gap: 20px;
+    display: flex;
+    font-weight: 500;
+    align-items: center;
+    svg {
+      font-size: 18px;
+      color: white;
+    }
+    @include md {
+      display: none;
+    }
+  }
+
+  &.mobileview {
+    //background-color: blueviolet;
+    position: fixed;
+    z-index: 200;
+    .menuitems {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      //background: var(--black3);
+      width: 100%;
+      //height: 60px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      animation: mobileMenu 0.3s ease forwards;
+      .menuitem {
+        height: auto;
+        padding: 15px 20px;
+        margin: 0;
+        cursor: pointer;
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .searchBar {
+    top: 60px;
+    opacity: 1;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    animation: mobileMenu 0.3s ease forwards;
+    .searchInput {
+      opacity: 1;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      margin-top: 0;
+      width: 100%;
+
+      svg {
+        font-size: 20px;
+        //flex-shrink: 0;
+        margin-left: 10px;
+        cursor: pointer;
+        width: 40px;
+        height: 20px;
+        color: black;
+        margin-right: 20px;
+      }
+
+      input {
+        width: 100%;
+        height: 50px;
+        background-color: white;
+        outline: 0;
+        border: 0;
+        border-radius: 30px 0 0 30px;
+        padding: 0 15px;
+        font-size: 14px;
+        @include md {
+          height: 60px;
+          font-size: 20px;
+          padding: 0 30px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes mobileMenu {
+  0% {
+    transform: translateY(-130%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
