@@ -9,8 +9,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./Pages/Home/Home";
 import Details from "./Pages/details/Details";
-//import SearchResult from "./Pages/searchResult/SearchResult";
-//import Explore from "./Pages/explore/Explore";
+import SearchResult from "./Pages/searchResult/SearchResult";
+import Explore from "./Pages/explore/Explore";
 //import PageNotFound from "./pages/404/PageNotFound";
 
 //const Home = lazy(() => import("./Pages/Home/"));
@@ -75,6 +75,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:mediaType/:id" element={<Details />} />
+        <Route path="/explore/:mediaType" element={<Explore />} />
+        <Route path="/search/:query" element={<SearchResult />} />
       </Routes>
       <Footer />
     </BrowserRouter>

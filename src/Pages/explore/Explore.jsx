@@ -7,7 +7,7 @@ import "./style.scss";
 
 import useFetch from "../../Hooks/useFetch";
 import { fetchApiData } from "../../utils/services";
-import ContentWrapper from "../../Components/ContentWrapper/ContentWrapper";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/movieCard/MovieCard";
 import Spinner from "../../components/spinner/Spinner";
 
@@ -33,16 +33,24 @@ const Explore = () => {
   const [genre, setGenre] = useState(null);
   const [sortby, setSortby] = useState(null);
   const { mediaType } = useParams();
-
+  //console.clear();
+  console.log(`callig movie list`);
   const { data: genresData } = useFetch(`/genre/${mediaType}/list`);
 
   const fetchInitialData = () => {
+    console.log(`inside initial fetch`);
     setLoading(true);
-    fetchApiData(`/discover/${mediaType}`, filters).then((res) => {
-      setData(res);
-      setPageNum((prev) => prev + 1);
-      setLoading(false);
-    });
+    console.log(`before calling discover`);
+    fetchApiData(`/discover/${mediaType}`, filters)
+      .then((res) => {
+        console.log(`res found ${res}`);
+        setData(res);
+        setPageNum((prev) => prev + 1);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(`err ${err}`);
+      });
   };
 
   const fetchNextPageData = () => {
@@ -67,7 +75,9 @@ const Explore = () => {
     setPageNum(1);
     setSortby(null);
     setGenre(null);
+    console.log(`before initial data`);
     fetchInitialData();
+    console.log(`after initial data`);
   }, [mediaType]);
 
   const onChange = (selectedItems, action) => {

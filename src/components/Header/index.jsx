@@ -6,14 +6,14 @@ import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
   const menuRef = useRef();
+  const searchRef = useRef();
   const [show, setShow] = useState("top");
   const [lastScrollY, setLastScrollY] = useState(0);
-
+  const [query, setQuery] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileView, setMobileView] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -30,8 +30,6 @@ const Header = () => {
       window.removeEventListener("scroll", myScrollLisneter);
     };
   }, [location]);
-
-  useEffect(() => {}, []);
 
   const myScrollLisneter = (e) => {
     if (window.scrollY > 200) {
@@ -58,10 +56,22 @@ const Header = () => {
     //console.log(mobileMenu);
   };
 
+  const searchQueryHandler = (event) => {
+    let queryVal = searchRef.current.value;
+    console.log(`searchQueryHandler:"${queryVal}`);
+    if (event.key === "Enter" && queryVal.length > 0) {
+      navigate(`/search/${queryVal}`);
+      setTimeout(() => {
+        setShowSearch(false);
+      }, 1000);
+    }
+  };
+
   const navigatorFun = (tag) => {
     //console.log(tag);
+    closeMenu();
     if (tag == "tv") navigate(`/explore/tv`);
-    else navigate(`/explore/movies`);
+    else navigate(`/explore/movie`);
   };
 
   return (
@@ -119,9 +129,15 @@ const Header = () => {
         <div className="searchBar">
           <div className="searchInput">
             <input
+              ref={searchRef}
               type="text"
               className="searchInput"
               placeholder="Search for a movie or tv show...."
+              /*onChange={(e) => {
+                console.log(`searchvalue: ${e.target.value}`);
+              }}
+              */
+              onKeyUp={searchQueryHandler}
             />
             <VscChromeClose
               onClick={() => {
